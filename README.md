@@ -5,12 +5,19 @@ This project focuses on developing a deep learning model to classify dog breeds 
 *Project Structure*
 
 ├── dogImages/                    # Directory containing the dataset
+
 │   ├── train/                    # Training images
+
 │   ├── valid/                    # Validation images
+
 │   └── test/                     # Test images
+
 ├── train_model.py                # Script for training the model
+
 ├── hpo.py                        # Script for hyperparameter optimization
+
 ├── train_and_deploy.ipynb        # Jupyter notebook for training, tuning, and deployment
+
 ├── README.md                     # Project README file
 
 
