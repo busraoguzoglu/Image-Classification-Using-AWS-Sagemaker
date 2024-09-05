@@ -1,4 +1,4 @@
-***Dog Breed Classification using PyTorch and AWS SageMaker***
+****Dog Breed Classification using PyTorch and AWS SageMaker****
 
 This project focuses on developing a deep learning model to classify dog breeds using PyTorch, leveraging AWS SageMaker for training, hyperparameter tuning, and deployment. The model is based on the ResNet18 architecture, a popular convolutional neural network designed for image classification tasks.
 
