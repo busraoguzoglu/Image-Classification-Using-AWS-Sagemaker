@@ -4,6 +4,7 @@ This project focuses on developing a deep learning model to classify dog breeds 
 
 ## Project Structure
 
+``
 ├── dogImages/                    # Directory containing the dataset
 
 │   ├── train/                    # Training images
@@ -19,6 +20,7 @@ This project focuses on developing a deep learning model to classify dog breeds 
 ├── train_and_deploy.ipynb        # Jupyter notebook for training, tuning, and deployment
 
 ├── README.md                     # Project README file
+``
 
 
 ## Data
