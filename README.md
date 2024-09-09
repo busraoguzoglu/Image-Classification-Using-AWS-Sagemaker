@@ -16,5 +16,4 @@ Hyperparameter optimization is performed using SageMaker's HyperparameterTuner. 
 **Hyperparameters Tuned:**
   
 - Learning rate
-  
-- Batch size (optional)
+- Batch size
