@@ -17,3 +17,10 @@ Hyperparameter optimization is performed using SageMaker's HyperparameterTuner. 
   
 - Learning rate
 - Batch size
+
+## Debugging and Profiling
+To ensure optimal model performance and detect potential issues during training, debugging and profiling were integrated into the project using AWS SageMaker Debugger. The DebuggerHookConfig and ProfilerConfig settings help monitor the training process by capturing data on the model's gradients, loss, and resource utilization.
+
+**Debugging:** The model's gradients and loss values are tracked to detect problems like vanishing gradients, overfitting, and poor weight initialization. SageMaker Debugger's built-in rules are applied to automatically detect and flag such issues.
+
+**Profiling:** Profiling is used to monitor system resource utilization, such as CPU and memory usage, throughout the training process. This helps identify bottlenecks and optimize resource allocation to improve training efficiency.
