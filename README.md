@@ -7,11 +7,11 @@ The dataset used for this project consists of images of 133 different dog breeds
 
 
 ## Model Training
-The model is based on the ResNet18 architecture, which is fine-tuned on our dataset using transfer learning. The training process is managed by train_model_profiling.py, which includes steps for data preprocessing, model training, and evaluation.
+The model is based on the ResNet18 architecture, which is fine-tuned on our dataset using transfer learning. The training process is managed by *train_model_profiling.py*, which includes steps for data preprocessing, model training, and evaluation.
 
 
 ## Hyperparameter Tuning
-Hyperparameter optimization is performed using SageMaker's HyperparameterTuner. The script hpo.py defines the search space and objective metrics for tuning. SageMaker automatically manages the tuning job, allowing for efficient exploration of hyperparameter combinations to improve model performance.
+Hyperparameter optimization is performed using SageMaker's HyperparameterTuner. The script *hpo.py* defines the search space and objective metrics for tuning. SageMaker automatically manages the tuning job, allowing for efficient exploration of hyperparameter combinations to improve model performance.
 
 **Hyperparameters Tuned:**
   
