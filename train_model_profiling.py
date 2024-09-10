@@ -1,5 +1,5 @@
 """
-Script to perform hyperparameter optimization on a model
+Script to perform training, profiling, debugging
 """
 import numpy as np
 import torch
@@ -160,7 +160,9 @@ def main(args):
     train_loader, valid_loader, test_loader = create_data_loaders(args.s3_data_dir, args.batch_size)
     
     hook = smd.Hook.create_from_json_file()
+    
     hook.register_hook(model)
+    
     logger.info("Hooks created")
     
     logger.info("Model training")
@@ -173,7 +175,8 @@ def main(args):
         os.makedirs(args.model_dir)
 
     # Save the model
-    torch.save(model.state_dict(), os.path.join(args.model_dir, 'model_profiling.pth'))
+    print(f"Saving model to {os.path.join(args.model_dir, 'model.pth')}")
+    torch.save(model.state_dict(), os.path.join(args.model_dir, 'model.pth'))
 
 
 
@@ -186,9 +189,9 @@ if __name__=='__main__':
     parser.add_argument('--s3_data_dir', type=str, default="sagemaker-studio-814424935677-pve38pywqph/dogImages", help='S3 directory where data is stored')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for the optimizer')
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size for training')
-    parser.add_argument('--epochs', type=int, default=10, help='Number of epochs to train')
+    parser.add_argument('--epochs', type=int, default=9, help='Number of epochs to train')
     parser.add_argument('--data_dir', type=str, default='./dogImages', help='Directory where the dataset is stored')
-    parser.add_argument('--model_dir', type=str, default='./model', help='Directory where the model will be saved')
+    parser.add_argument('--model_dir', type=str, default=os.environ['SM_MODEL_DIR'], help='Directory where the model will be saved')
     
     args = parser.parse_args()
 
