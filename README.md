@@ -24,3 +24,9 @@ To ensure optimal model performance and detect potential issues during training,
 **Debugging:** The model's gradients and loss values are tracked to detect problems like vanishing gradients, overfitting, and poor weight initialization. SageMaker Debugger's built-in rules are applied to automatically detect and flag such issues.
 
 **Profiling:** Profiling is used to monitor system resource utilization, such as CPU and memory usage, throughout the training process. This helps identify bottlenecks and optimize resource allocation to improve training efficiency.
+
+## Deployment and Inference
+
+Due to the nature of PyTorch models, a custom inference script (inference.py) was required to handle the model loading and prediction logic. This script manages how input data (images in this case) is processed and passed through the model for predictions.
+
+The model is deployed on an instance on AWS that serves the endpoint, allowing us to send images of dogs and receive predictions about their breed. A custom predictor class is used to handle image data and ensure it is properly serialized and deserialized for the prediction requests. This setup ensures efficient deployment and accurate predictions for the dog breed classification task.
