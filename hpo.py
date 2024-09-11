@@ -19,6 +19,12 @@ from torch.utils.data import Dataset, DataLoader
 from sagemaker.debugger import DebuggerHookConfig, CollectionConfig, Rule, rule_configs
 
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 def test(model, test_loader, criterion):    
     running_loss = 0.0
@@ -41,8 +47,7 @@ def test(model, test_loader, criterion):
 
 
 
-        
-def train(model, train_loader, criterion, optimizer, epochs):
+def train(model, train_loader, criterion, optimizer, epochs, args):
     for epoch in range(epochs):
         running_loss = 0.0
         for i, (images, labels) in enumerate(train_loader, 0):
@@ -54,11 +59,11 @@ def train(model, train_loader, criterion, optimizer, epochs):
 
             running_loss += loss.item()
             if i % 100 == 99:
-                print(f'Epoch [{epoch + 1}], Step [{i + 1}], Loss: {running_loss / 100:.4f}')
+                logger.info(f'Epoch [{epoch + 1}/{epochs}], Step [{i + 1}], Loss: {running_loss / 100:.4f}')
                 running_loss = 0.0
+        # Log hyperparameters after each epoch
+        logger.info(f'Hyperparameters: Epoch: {epoch+1}, Learning Rate: {args.learning_rate}, Batch Size: {args.batch_size}')
     return model
-
-
 
 
 def net():
@@ -128,39 +133,38 @@ def create_data_loaders(s3_data_dir, batch_size):
 
     return train_loader, valid_loader, test_loader
 
-
+    
+    
 def main(args):
 
-    model=net()
-    
-    '''
-    TODO: Create your loss and optimizer
-    '''
+    model = net()
+
+    # Log the start of training
+    logger.info(f'Starting training with: learning_rate={args.learning_rate}, batch_size={args.batch_size}, epochs={args.epochs}')
+
+    # Create loss criterion and optimizer
     loss_criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.fc.parameters(), lr=args.learning_rate)
-    
-    '''
-    TODO: Call the train function to start training your model
-    Remember that you will need to set up a way to get training data from S3
-    '''
 
     # Create data loaders
     train_loader, valid_loader, test_loader = create_data_loaders(args.s3_data_dir, args.batch_size)
-    model=train(model, train_loader, loss_criterion, optimizer, args.epochs)
-    
-    '''
-    TODO: Test the model to see its accuracy
-    '''
+
+    # Train the model
+    model = train(model, train_loader, loss_criterion, optimizer, args.epochs, args)
+
+    # Test the model
+    logger.info('Testing the model after training...')
     test(model, test_loader, loss_criterion)
-    
-    # Ensure the output directory exists
+
+    # Save the model
     if not os.path.exists(args.model_dir):
         os.makedirs(args.model_dir)
 
-    # Save the model
     torch.save(model.state_dict(), os.path.join(args.model_dir, 'model_hpo.pth'))
-
-
+    logger.info(f'Model saved at {os.path.join(args.model_dir, "model_hpo.pth")}')
+    
+     
+    
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser()

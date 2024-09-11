@@ -162,6 +162,7 @@ def main(args):
     hook = smd.Hook.create_from_json_file()
     
     hook.register_hook(model)
+    hook.register_loss(loss_criterion)
     
     logger.info("Hooks created")
     
@@ -189,7 +190,7 @@ if __name__=='__main__':
     parser.add_argument('--s3_data_dir', type=str, default="sagemaker-studio-814424935677-pve38pywqph/dogImages", help='S3 directory where data is stored')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for the optimizer')
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size for training')
-    parser.add_argument('--epochs', type=int, default=9, help='Number of epochs to train')
+    parser.add_argument('--epochs', type=int, default=10, help='Number of epochs to train')
     parser.add_argument('--data_dir', type=str, default='./dogImages', help='Directory where the dataset is stored')
     parser.add_argument('--model_dir', type=str, default=os.environ['SM_MODEL_DIR'], help='Directory where the model will be saved')
     
